@@ -4,7 +4,15 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  uname -a
+  cd "$shome"
+  block compile yarn
+
+  mkdir -p "$shome/vendor"
+  git clone https://github.com/pantsel/konga.git "$shome/vendor/konga-${KONGA_VERSION}" || true
+  cd "$shome/vendor/konga-${KONGA_VERSION}"
+  git fetch
+  git reset --hard "${KONGA_VERSION}"
+  block compile yarn
 }
 
 main "$@"
