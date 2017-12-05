@@ -13,6 +13,9 @@ function main {
   git fetch
   git reset --hard "${KONGA_VERSION}"
   block compile yarn
+
+  rm -rf "$shome/vendor/konga"
+  ln -nfs "konga-${KONGA_VERSION}" "$shome/vendor/konga"
 }
 
 main "$@"
